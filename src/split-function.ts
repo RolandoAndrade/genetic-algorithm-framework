@@ -1,4 +1,5 @@
 import { Chromosome } from "./chromosome";
+import { DefaultGenType } from "./aliases";
 
 /**
  * @description Defines the split function.
@@ -9,4 +10,4 @@ import { Chromosome } from "./chromosome";
  * @param chromosomeA The first chromosome to split.
  * @param chromosomeB The second chromosome to split.
  * */
-export type SplitFunction<GenType = number[][]> = (chromosomeA: Chromosome<GenType>, chromosomeB: Chromosome<GenType>) => [GenType[], GenType[]];
+export type SplitFunction<GenType = DefaultGenType> = (chromosomeA: Chromosome<GenType>, chromosomeB: Chromosome<GenType>) => [GenType[], GenType[]];

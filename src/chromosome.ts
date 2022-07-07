@@ -1,6 +1,7 @@
 import { MixFunction } from "./mix-function";
 import { MutationFunction } from "./mutation-function";
 import { SplitFunction } from "./split-function";
+import { DefaultGenType } from "./aliases";
 
 /**
  * @description Chromosome class.
@@ -8,7 +9,7 @@ import { SplitFunction } from "./split-function";
  * A chromosome is a set of genes that represent a virtual entity. They are used to generate an output and
  * are cross-overed to generate new chromosomes after each generation.
  * */
-export class Chromosome<GenType = number[][]> {
+export class Chromosome<GenType = DefaultGenType> {
     /**
      * @description Creates a new chromosome cross-over with the given chromosome.
      * @param chromosomeA The first chromosome to cross-over.
@@ -18,7 +19,7 @@ export class Chromosome<GenType = number[][]> {
      * @param mutationFunction The function used to mutate the genes of the chromosome.
      * @returns The new chromosome.
      * */
-    public static crossOver<GenType = number[][]>(chromosomeA: Chromosome<GenType>,
+    public static crossOver<GenType = DefaultGenType>(chromosomeA: Chromosome<GenType>,
                                                   chromosomeB: Chromosome<GenType>,
                                                   splitFunction: SplitFunction<GenType>,
                                                   mixFunction: MixFunction<GenType>,

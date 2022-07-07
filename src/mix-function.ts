@@ -1,3 +1,5 @@
+import { DefaultGenType } from "./aliases";
+
 /**
  * @description Defines the mix function.
  *
@@ -6,4 +8,4 @@
  * @param genesA The first split of the genes.
  * @param genesB The second split of the genes.
  * */
-export type MixFunction<GenType = number[][]> = (genesA: GenType[], genesB: GenType[]) => GenType;
+export type MixFunction<GenType = DefaultGenType> = (genesA: GenType[], genesB: GenType[]) => GenType;

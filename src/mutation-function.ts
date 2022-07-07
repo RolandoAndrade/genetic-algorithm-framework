@@ -1,3 +1,5 @@
+import { DefaultGenType } from "./aliases";
+
 /**
  * @description Defines the mutation function.
  *
@@ -5,4 +7,4 @@
  *
  * @param genes The genes to mutate.
  * */
-export type MutationFunction<GenType = number[][]> = (genes: GenType) => GenType;
+export type MutationFunction<GenType = DefaultGenType> = (genes: GenType) => GenType;

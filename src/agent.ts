@@ -15,5 +15,5 @@ export abstract class Agent<GenType = DefaultGenType, FitnessType = DefaultFitne
      * @description Gets the fitness value of the agent.
      * @returns The fitness value of the agent.
      * */
-    abstract getScore(): FitnessType;
+    abstract getScore(): Promise<FitnessType>;
 }

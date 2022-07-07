@@ -7,4 +7,4 @@ import { Agent } from "./agent";
  * @param currentGeneration The current generation number.
  * @returns The new generation of agents.
  * */
-export type GenerationFactory<GenType = DefaultGenType, FitnessType = DefaultFitnessType> = (currentPopulation: Agent[], currentGeneration: number) => Agent[];
+export type GenerationFactory<GenType = DefaultGenType, FitnessType = DefaultFitnessType> = (currentPopulation: Agent<GenType, FitnessType>[], currentGeneration: number) => Agent<GenType, FitnessType>[];

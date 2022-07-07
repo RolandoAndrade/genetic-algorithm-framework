@@ -4,6 +4,10 @@ import { StopCondition } from "./stop-condition";
 import { Agent } from "./agent";
 import { SimulationStats } from "./simulation-stats";
 import { AgentWithScore } from "./sort-function";
+import { shuffle } from "./utils";
+import { Chromosome } from "./chromosome";
+
+type AgentParents<GenType, FitnessType> = [Agent<GenType, FitnessType>, Agent<GenType, FitnessType>][];
 
 export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessType> {
     /** Population of the simulation */
@@ -35,10 +39,24 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
         return this.options.sortFunction(agents);
     }
 
-    /*
-    protected getParents(agents: Agent<GenType, FitnessType>[]): [Agent<GenType, FitnessType>, Agent<GenType, FitnessType>][] {
-        // get random pairs from agents array
-    }*/
+
+    protected getParents(agents: Agent<GenType, FitnessType>[]): AgentParents<GenType, FitnessType> {
+        // randomize the order of the agents
+        const shuffledAgents = shuffle(agents);
+        const parents = [];
+        // for each pair of agents, append the pair to the parents array
+        for (let i = 0; i < shuffledAgents.length; i += 2) {
+            parents.push([shuffledAgents.at(i % shuffledAgents.length), shuffledAgents.at((i + 1) % shuffledAgents.length)]);
+        }
+        return parents;
+    }
+
+    protected generateChildren(parents: AgentParents<GenType, FitnessType>): Agent<GenType, FitnessType>[] {
+        for (const couple of parents) {
+            const [ parent1, parent2 ] = couple;
+        }
+        return [];
+    }
 
     /**
      * @description Runs the simulation.
@@ -52,6 +70,7 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
             scores = await this.computeScores();
             scores = this.sortByScore(scores);
             const selectedAgents = this.options.selectionFunction(scores);
+            const parents = this.getParents(selectedAgents);
 
         } while (stopCondition(this.population, this.computeStats(scores.map(agent => agent.score))));
     }

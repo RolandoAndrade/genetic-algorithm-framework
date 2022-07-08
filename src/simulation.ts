@@ -5,26 +5,35 @@ import { Agent } from "./agent";
 import { SimulationStats } from "./simulation-stats";
 import { AgentWithScore } from "./sort-function";
 import { shuffle } from "./utils";
-import { Chromosome } from "./chromosome";
 
-type AgentParents<GenType, FitnessType> = [Agent<GenType, FitnessType>, Agent<GenType, FitnessType>][];
+type AgentParents<GenType, FitnessType> = IterableIterator<[Agent<GenType, FitnessType>, Agent<GenType, FitnessType>]>;
 
 export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessType> {
     /** Population of the simulation */
     protected population: Agent<GenType, FitnessType>[] = [];
     /** Defines the current generation of the simulation */
-    protected readonly currentGeneration = 0;
+    protected currentGeneration = 0;
 
     /**
      * @param options The simulation options.
      * */
     constructor(protected readonly options: SimulationOptions<GenType, FitnessType>) {}
 
+    /**
+     * @description Computes the stores of the agents in parallel and awaits for the finish of the computation
+     * of all the stores.
+     * @returns The scores of the agents.
+     * */
     protected async computeScores(): Promise<FitnessType[]> {
         const promises = this.population.map(agent => agent.getScore());
         return Promise.all(promises);
     }
 
+    /**
+     * @description the stats of the obtained scores.
+     * @param scores The scores of the agents.
+     * @returns The stats of the obtained scores.
+     * */
     protected computeStats(scores: FitnessType[]): SimulationStats<FitnessType> {
         return {
             currentGeneration: this.currentGeneration,
@@ -34,28 +43,43 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
         }
     }
 
+    /**
+     * @description Sorts the agents by score.
+     * @param scores The scores of the agents.
+     * @returns The sorted agents with an appended score field.
+     * */
     protected sortByScore(scores: FitnessType[]): AgentWithScore<GenType, FitnessType>[] {
         const agents = this.population.map((agent, index) => ({ agent, score: scores.at(index) }));
         return this.options.sortFunction(agents);
     }
 
-
-    protected getParents(agents: Agent<GenType, FitnessType>[]): AgentParents<GenType, FitnessType> {
+    /**
+     * @description Gets the parents of the selected agents.
+     * @param agents The selected agents.
+     * @returns A generator of pairs of parents.
+     * */
+    protected *getParents(agents: Agent<GenType, FitnessType>[]): AgentParents<GenType, FitnessType> {
         // randomize the order of the agents
         const shuffledAgents = shuffle(agents);
-        const parents = [];
         // for each pair of agents, append the pair to the parents array
         for (let i = 0; i < shuffledAgents.length; i += 2) {
-            parents.push([shuffledAgents.at(i % shuffledAgents.length), shuffledAgents.at((i + 1) % shuffledAgents.length)]);
+            yield [shuffledAgents.at(i % shuffledAgents.length), shuffledAgents.at((i + 1) % shuffledAgents.length)];
         }
-        return parents;
     }
 
+    /**
+     * @description Generates the children of the selected agents.
+     * @param parents The generator of the selected agents.
+     * @returns The children of the selected agents.
+     * */
     protected generateChildren(parents: AgentParents<GenType, FitnessType>): Agent<GenType, FitnessType>[] {
+        let children = [];
         for (const couple of parents) {
             const [ parent1, parent2 ] = couple;
+            const child = Agent.crossover(parent1, parent2);
+            children.push(child);
         }
-        return [];
+        return children;
     }
 
     /**
@@ -71,7 +95,8 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
             scores = this.sortByScore(scores);
             const selectedAgents = this.options.selectionFunction(scores);
             const parents = this.getParents(selectedAgents);
-
+            const children = this.generateChildren(parents);
+            this.population = this.options.generationFactory(this.population.concat(children), ++this.currentGeneration);
         } while (stopCondition(this.population, this.computeStats(scores.map(agent => agent.score))));
     }
 }

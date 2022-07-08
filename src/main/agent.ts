@@ -1,8 +1,6 @@
 import { Chromosome } from "./chromosome";
-import { DefaultFitnessType, DefaultGenType } from "./aliases";
-import { SplitFunction } from "./split-function";
-import { MixFunction } from "./mix-function";
-import { MutationFunction } from "./mutation-function";
+import { DefaultFitnessType, DefaultGenType } from "../types";
+import { SplitFunction, MixFunction, MutationFunction } from "../functions";
 
 /**
  * @description Agent class.

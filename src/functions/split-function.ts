@@ -1,5 +1,5 @@
-import { Chromosome } from "./chromosome";
-import { DefaultGenType } from "./aliases";
+import { Chromosome } from "../main/chromosome";
+import { DefaultGenType } from "../types";
 
 /**
  * @description Defines the split function.

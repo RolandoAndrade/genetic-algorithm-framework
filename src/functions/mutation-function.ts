@@ -1,4 +1,4 @@
-import { DefaultGenType } from "./aliases";
+import { DefaultGenType } from "../types";
 
 /**
  * @description Defines the mutation function.

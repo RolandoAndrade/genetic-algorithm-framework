@@ -1,10 +1,7 @@
-import { DefaultFitnessType, DefaultGenType } from "./aliases";
-import { SimulationOptions } from "./simulation-options";
-import { StopCondition } from "./stop-condition";
+import { DefaultFitnessType, DefaultGenType, SimulationOptions, SimulationStats, AgentWithScore } from "../types";
+import { StopCondition } from "../functions";
 import { Agent } from "./agent";
-import { SimulationStats } from "./simulation-stats";
-import { AgentWithScore } from "./sort-function";
-import { shuffle } from "./utils";
+import { shuffle } from "../utils";
 
 type AgentParents<GenType, FitnessType> = IterableIterator<[Agent<GenType, FitnessType>, Agent<GenType, FitnessType>]>;
 

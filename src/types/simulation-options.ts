@@ -1,6 +1,4 @@
-import { GenerationFactory } from "./generation.factory";
-import { SortFunction } from "./sort-function";
-import { SelectionFunction } from "./selection-function";
+import { GenerationFactory, SortFunction, SelectionFunction } from "../functions";
 
 export interface SimulationOptions<GenType, FitnessType> {
     /** Defines how a generation is created */

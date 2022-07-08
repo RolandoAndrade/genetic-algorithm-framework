@@ -1,6 +1,5 @@
-import { DefaultFitnessType, DefaultGenType } from "./aliases";
-import { AgentWithScore } from "./sort-function";
-import { Agent } from "./agent";
+import { AgentWithScore, DefaultFitnessType, DefaultGenType } from "../types";
+import { Agent } from "../main/agent";
 
 /**
  * @description Selects a group of agents from a population by a given score.

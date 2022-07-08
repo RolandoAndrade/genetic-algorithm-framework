@@ -1,7 +1,5 @@
-import { MixFunction } from "./mix-function";
-import { MutationFunction } from "./mutation-function";
-import { SplitFunction } from "./split-function";
-import { DefaultGenType } from "./aliases";
+import { MixFunction, MutationFunction, SplitFunction } from "../functions";
+import { DefaultGenType } from "../types";
 
 /**
  * @description Chromosome class.

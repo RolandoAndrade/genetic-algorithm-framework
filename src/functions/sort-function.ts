@@ -1,7 +1,4 @@
-import { Agent } from "./agent";
-import { DefaultFitnessType, DefaultGenType } from "./aliases";
-
-export type AgentWithScore<GenType, FitnessType> = { agent: Agent<GenType, FitnessType>, score: FitnessType };
+import { DefaultFitnessType, DefaultGenType, AgentWithScore } from "../types";
 
 /**
  * @description Sorts agents by score.

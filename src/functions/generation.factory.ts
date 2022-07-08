@@ -1,5 +1,5 @@
-import { DefaultFitnessType, DefaultGenType } from "./aliases";
-import { Agent } from "./agent";
+import { DefaultFitnessType, DefaultGenType } from "../types";
+import { Agent } from "../main/agent";
 
 /**
  * @description Generates a new generation of agents.

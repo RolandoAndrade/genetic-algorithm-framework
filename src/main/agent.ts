@@ -1,17 +1,16 @@
 import { Chromosome } from "./chromosome";
-import { DefaultFitnessType, DefaultGenType } from "../types";
+import { DefaultFitnessType, DefaultGenType, Genome } from "../types";
 import { SplitFunction, MixFunction, MutationFunction } from "../functions";
 import { AgentGenerator } from "@/main/agent-generator";
 
 /**
- * @description Agent class.
- *
- * An agent is a virtual entity that can be placed in a simulation. It contains a set of chromosomes and compute
+ * @description An agent is a virtual entity that can be placed in a simulation. It contains a set of chromosomes and compute
  * a fitness value that is used during the selection and crossover process.
  * */
 export abstract class Agent<GenType = DefaultGenType, FitnessType = DefaultFitnessType> {
 
-    public abstract get genome(): Chromosome<GenType>[];
+    /** Group of chromosomes that forms the agent */
+    public abstract get genome(): Genome<GenType>;
 
     /**
      * Generates a child agent from two agents.

@@ -12,9 +12,11 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
     protected currentGeneration = 0;
 
     /**
-     * @param options The simulation options.
+     * @param properties The simulation options.
      * */
-    constructor(protected readonly options: SimulationOptions<GenType, FitnessType>) {}
+    constructor(protected readonly properties: SimulationOptions<GenType, FitnessType>) {
+        this.population = this.properties.agentGenerator.createInitialPopulation();
+    }
 
     /**
      * @description Computes the stores of the agents in parallel and awaits for the finish of the computation
@@ -47,7 +49,7 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
      * */
     protected sortByScore(scores: FitnessType[]): AgentWithScore<GenType, FitnessType>[] {
         const agents = this.population.map((agent, index) => ({ agent, score: scores.at(index) }));
-        return this.options.sortFunction(agents);
+        return this.properties.sortFunction(agents);
     }
 
     /**
@@ -73,7 +75,8 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
         let children = [];
         for (const couple of parents) {
             const [ parent1, parent2 ] = couple;
-            const child = Agent.crossover(parent1, parent2);
+            const child = Agent.crossover(parent1, parent2, this.properties.splitFunction,
+                this.properties.mixFunction, this.properties.mutationFunction, this.properties.agentGenerator);
             children.push(child);
         }
         return children;
@@ -82,18 +85,22 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
     /**
      * @description Runs the simulation.
      * @param stopCondition Defines when the simulation must stop. If not specified, the simulation will run indefinitely.
+     * @param fromStart If true, the simulation will generate the initial population and start from the first generation.
      * @returns The final population of agents.
      * */
-    public async run(stopCondition: StopCondition<GenType, FitnessType> = () => true) {
-        this.population = this.options.generationFactory(this.population, this.currentGeneration);
+    public async run(stopCondition: StopCondition<GenType, FitnessType> = () => true, fromStart = true) {
+        if (fromStart) {
+            this.population = this.properties.agentGenerator.createInitialPopulation();
+            this.currentGeneration = 0;
+        }
         let scores = [];
         do {
             scores = await this.computeScores();
             scores = this.sortByScore(scores);
-            const selectedAgents = this.options.selectionFunction(scores);
+            const selectedAgents = this.properties.selectionFunction(scores);
             const parents = this.getParents(selectedAgents);
             const children = this.generateChildren(parents);
-            this.population = this.options.generationFactory(this.population.concat(children), ++this.currentGeneration);
+            this.population = this.properties.agentGenerator.createPopulation(this.population, selectedAgents, children, ++this.currentGeneration);
         } while (stopCondition(this.population, this.computeStats(scores.map(agent => agent.score))));
     }
 }

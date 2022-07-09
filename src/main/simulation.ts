@@ -88,19 +88,21 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
      * @param fromStart If true, the simulation will generate the initial population and start from the first generation.
      * @returns The final population of agents.
      * */
-    public async run(stopCondition: StopCondition<GenType, FitnessType> = () => true, fromStart = true) {
+    public async run(stopCondition: StopCondition<GenType, FitnessType> = () => true, fromStart = true): Promise<SimulationStats<FitnessType>> {
         if (fromStart) {
             this.population = this.properties.agentGenerator.createInitialPopulation();
             this.currentGeneration = 0;
         }
-        let scores = [];
+        let stats: SimulationStats<FitnessType>;
         do {
-            scores = await this.computeScores();
-            scores = this.sortByScore(scores);
-            const selectedAgents = this.properties.selectionFunction(scores);
+            const scores = await this.computeScores();
+            const agentWithScores = this.sortByScore(scores);
+            const selectedAgents = this.properties.selectionFunction(agentWithScores);
             const parents = this.getParents(selectedAgents);
             const children = this.generateChildren(parents);
             this.population = this.properties.agentGenerator.createPopulation(this.population, selectedAgents, children, ++this.currentGeneration);
-        } while (stopCondition(this.population, this.computeStats(scores.map(agent => agent.score))));
+            stats = this.computeStats(agentWithScores.map(agent => agent.score));
+        } while (!stopCondition(this.population, stats));
+        return stats;
     }
 }

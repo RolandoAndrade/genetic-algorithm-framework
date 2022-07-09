@@ -1,7 +1,9 @@
 /**
  * @description Stats about the simulation.
  * */
-export interface SimulationStats<FitnessType> {
+import { AgentWithScore } from "@/types/agent-with-score";
+
+export interface SimulationStats<GenType, FitnessType> {
     /** The number of generations */
     currentGeneration: number;
     /** The highest fitness score */
@@ -9,5 +11,5 @@ export interface SimulationStats<FitnessType> {
     /** The lowest fitness score */
     lowestScore: FitnessType;
     /** The scores of the simulation that can be used to extract other statistics */
-    scores: FitnessType[];
+    agentsWithScores: AgentWithScore<GenType, FitnessType>[];
 }

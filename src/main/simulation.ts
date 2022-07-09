@@ -33,12 +33,12 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
      * @param scores The scores of the agents.
      * @returns The stats of the obtained scores.
      * */
-    protected computeStats(scores: FitnessType[]): SimulationStats<FitnessType> {
+    protected computeStats(scores: AgentWithScore<GenType, FitnessType>[]): SimulationStats<GenType, FitnessType> {
         return {
             currentGeneration: this.currentGeneration,
-            highestScore: scores.at(0),
-            lowestScore: scores.at(-1),
-            scores: scores
+            highestScore: scores.at(0)?.score,
+            lowestScore: scores.at(-1)?.score,
+            agentsWithScores: scores
         }
     }
 
@@ -88,12 +88,12 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
      * @param fromStart If true, the simulation will generate the initial population and start from the first generation.
      * @returns The final population of agents.
      * */
-    public async run(stopCondition: StopCondition<GenType, FitnessType> = () => true, fromStart = true): Promise<SimulationStats<FitnessType>> {
+    public async run(stopCondition: StopCondition<GenType, FitnessType> = () => true, fromStart = true): Promise<SimulationStats<GenType, FitnessType>> {
         if (fromStart) {
             this.population = this.properties.agentGenerator.createInitialPopulation();
             this.currentGeneration = 0;
         }
-        let stats: SimulationStats<FitnessType>;
+        let stats: SimulationStats<GenType, FitnessType>;
         do {
             const scores = await this.computeScores();
             const agentWithScores = this.sortByScore(scores);
@@ -101,7 +101,7 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
             const parents = this.getParents(selectedAgents);
             const children = this.generateChildren(parents);
             this.population = this.properties.agentGenerator.createPopulation(this.population, selectedAgents, children, ++this.currentGeneration);
-            stats = this.computeStats(agentWithScores.map(agent => agent.score));
+            stats = this.computeStats(agentWithScores);
         } while (!stopCondition(this.population, stats));
         return stats;
     }

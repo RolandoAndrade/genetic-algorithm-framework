@@ -21,6 +21,7 @@ describe("sentence optimization tests", () => {
 
     it("should find the sentence", async () => {
         const results = await simulation.run(sentenceStopCondition);
-        expect(results.highestScore).toEqual(expectedHighestScore)
+        expect(results.highestScore).toEqual(expectedHighestScore);
+        expect(results.agentsWithScores[0].agent.genome[0].getGenes().join("")).toEqual(SentenceConstants.EXPECTED_RESULT);
     });
 })

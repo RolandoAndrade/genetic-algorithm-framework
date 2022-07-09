@@ -2,7 +2,12 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2015",
-    "sourceMap": true
+    "sourceMap": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+    }
   },
   "exclude": [
     "node_modules"

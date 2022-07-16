@@ -1,21 +1,40 @@
 {
   "name": "genetic-algorithm-framework",
   "version": "1.0.0",
-  "description": "",
+  "description": "Small framework for genetic algorithms",
   "main": "index.js",
   "scripts": {
     "docs": "typedoc",
-    "test": "test"
+    "test": "test",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json"
   },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RolandoAndrade/genetic-algorithm-framework.git"
+  },
+  "keywords": [
+    "genetic-algorithm",
+    "framework",
+    "nodejs"
+  ],
+  "homepage": "https://rolandoandrade.github.io/genetic-algorithm-framework",
+  "author": "Rolando Andrade",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/create-config": "^0.3.0",
+    "@types/jest": "^28.1.4",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "eslint": "^8.19.0",
+    "jest": "^28.1.2",
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5",
+    "typedoc": "^0.23.6",
     "typescript": "^4.7.4"
   },
-  "devDependencies": {
-    "@types/jest": "^28.1.4",
-    "jest": "^28.1.2",
-    "ts-jest": "^28.0.5",
-    "typedoc": "^0.23.6"
-  }
+  "files": [
+    "dist/**/*"
+  ]
 }

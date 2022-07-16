@@ -3,14 +3,24 @@
     "module": "commonjs",
     "target": "es2015",
     "sourceMap": true,
+    "declaration": true,
+    "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "src/*"
       ],
+      "@examples/*": [
+        "examples/*"
+      ],
+      "@tests/*": [
+        "tests/*"
+      ]
     }
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "examples",
+    "test"
   ]
 }

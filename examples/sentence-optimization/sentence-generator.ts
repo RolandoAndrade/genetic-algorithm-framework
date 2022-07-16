@@ -1,4 +1,4 @@
-import { AgentGenerator, Chromosome } from "@/main";
+import { AgentGenerator } from "@/main";
 import { Sentence } from "./sentence";
 import { SentenceConstants } from "./constants";
 import { getRandomChar } from "./sentence-functions";

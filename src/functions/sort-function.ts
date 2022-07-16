@@ -5,5 +5,6 @@ import { DefaultFitnessType, DefaultGenType, AgentWithScore } from "../types";
  * @param agents The agents to sort with an appended score field.
  * @returns The sorted agents.
  * */
-export type SortFunction<GenType = DefaultGenType, FitnessType = DefaultFitnessType> =
-    (agents: AgentWithScore<GenType, FitnessType>[]) => AgentWithScore<GenType, FitnessType>[];
+export type SortFunction<GenType = DefaultGenType, FitnessType = DefaultFitnessType> = (
+    agents: AgentWithScore<GenType, FitnessType>[],
+) => AgentWithScore<GenType, FitnessType>[];

@@ -6,4 +6,6 @@ import { Agent } from "../main/agent";
  * @param population The population of agents.
  * @returns The selected agents.
  * */
-export type SelectionFunction<GenType = DefaultGenType, FitnessType = DefaultFitnessType> = (population: AgentWithScore<GenType, FitnessType>[]) => Agent<GenType, FitnessType>[];
+export type SelectionFunction<GenType = DefaultGenType, FitnessType = DefaultFitnessType> = (
+    population: AgentWithScore<GenType, FitnessType>[],
+) => Agent<GenType, FitnessType>[];

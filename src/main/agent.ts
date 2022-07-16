@@ -1,6 +1,6 @@
 import { Chromosome } from "./chromosome";
-import { DefaultFitnessType, DefaultGenType, Genome } from "../types";
-import { SplitFunction, MixFunction, MutationFunction } from "../functions";
+import { DefaultFitnessType, DefaultGenType, Genome } from "@/types";
+import { SplitFunction, MixFunction, MutationFunction } from "@/functions";
 import { AgentGenerator } from "@/main/agent-generator";
 
 /**
@@ -8,7 +8,6 @@ import { AgentGenerator } from "@/main/agent-generator";
  * a fitness value that is used during the selection and crossover process.
  * */
 export abstract class Agent<GenType = DefaultGenType, FitnessType = DefaultFitnessType> {
-
     /** Group of chromosomes that forms the agent */
     public abstract get genome(): Genome<GenType>;
 
@@ -22,12 +21,14 @@ export abstract class Agent<GenType = DefaultGenType, FitnessType = DefaultFitne
      * @param agentGenerator The agent generator used to generate the child agent.
      * @returns The child agent.
      * */
-    public static crossover<GenType = DefaultGenType, FitnessType = DefaultFitnessType>(agentA: Agent<GenType, FitnessType>,
-                                                                                        agentB: Agent<GenType, FitnessType>,
-                                                                                        splitFunction: SplitFunction<GenType>,
-                                                                                        mixFunction: MixFunction<GenType>,
-                                                                                        mutationFunction: MutationFunction<GenType>,
-                                                                                        agentGenerator: AgentGenerator<GenType, FitnessType>): Agent<GenType, FitnessType> {
+    public static crossover<GenType = DefaultGenType, FitnessType = DefaultFitnessType>(
+        agentA: Agent<GenType, FitnessType>,
+        agentB: Agent<GenType, FitnessType>,
+        splitFunction: SplitFunction<GenType>,
+        mixFunction: MixFunction<GenType>,
+        mutationFunction: MutationFunction<GenType>,
+        agentGenerator: AgentGenerator<GenType, FitnessType>,
+    ): Agent<GenType, FitnessType> {
         const childGenome = agentA.genome.map((chromosome, index) => {
             const otherChromosome = agentB.genome[index];
             return Chromosome.crossover(chromosome, otherChromosome, splitFunction, mixFunction, mutationFunction);

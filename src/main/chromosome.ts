@@ -17,11 +17,13 @@ export class Chromosome<GenType = DefaultGenType> {
      * @param mutationFunction The function used to mutate the genes of the chromosome.
      * @returns The new chromosome.
      * */
-    public static crossover<GenType = DefaultGenType>(chromosomeA: Chromosome<GenType>,
-                                                      chromosomeB: Chromosome<GenType>,
-                                                      splitFunction: SplitFunction<GenType>,
-                                                      mixFunction: MixFunction<GenType>,
-                                                      mutationFunction: MutationFunction<GenType>): Chromosome<GenType> {
+    public static crossover<GenType = DefaultGenType>(
+        chromosomeA: Chromosome<GenType>,
+        chromosomeB: Chromosome<GenType>,
+        splitFunction: SplitFunction<GenType>,
+        mixFunction: MixFunction<GenType>,
+        mutationFunction: MutationFunction<GenType>,
+    ): Chromosome<GenType> {
         const [chromosomeASplits, chromosomeBSplits] = splitFunction(chromosomeA, chromosomeB);
         const newGenes = mixFunction(chromosomeASplits, chromosomeBSplits);
         const mutatedGenes = mutationFunction(newGenes);
@@ -32,7 +34,6 @@ export class Chromosome<GenType = DefaultGenType> {
      * @param genes The genes of the chromosome.
      * */
     constructor(protected readonly genes: GenType) {}
-
 
     /**
      * @description Gets the genes of the chromosome.

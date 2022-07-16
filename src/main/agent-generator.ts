@@ -30,10 +30,12 @@ export abstract class AgentGenerator<GenType = DefaultGenType, FitnessType = Def
      * @param nextGeneration The next generation number.
      * @returns The new population of agents.
      * */
-    public createPopulation(currentPopulation: Agent<GenType, FitnessType>[],
-                            survivors: Agent<GenType, FitnessType>[],
-                            children: Agent<GenType, FitnessType>[],
-                            nextGeneration: number): Agent<GenType, FitnessType>[] {
+    public createPopulation(
+        currentPopulation: Agent<GenType, FitnessType>[],
+        survivors: Agent<GenType, FitnessType>[],
+        children: Agent<GenType, FitnessType>[],
+        nextGeneration: number,
+    ): Agent<GenType, FitnessType>[] {
         const populationSize = currentPopulation.length;
         const newPopulation = [...survivors, ...children];
         while (newPopulation.length < populationSize) {

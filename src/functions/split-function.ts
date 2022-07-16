@@ -10,4 +10,7 @@ import { DefaultGenType } from "../types";
  * @param chromosomeA The first chromosome to split.
  * @param chromosomeB The second chromosome to split.
  * */
-export type SplitFunction<GenType = DefaultGenType> = (chromosomeA: Chromosome<GenType>, chromosomeB: Chromosome<GenType>) => [GenType[], GenType[]];
+export type SplitFunction<GenType = DefaultGenType> = (
+    chromosomeA: Chromosome<GenType>,
+    chromosomeB: Chromosome<GenType>,
+) => [GenType[], GenType[]];

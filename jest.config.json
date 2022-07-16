@@ -3,6 +3,7 @@
   "testEnvironment": "node",
   "moduleNameMapper": {
     "^@/(.*)": "<rootDir>/src/$1",
-    "^@test/(.*)": "<rootDir>/test/$1"
+    "^@test/(.*)": "<rootDir>/test/$1",
+    "^@examples/(.*)": "<rootDir>/examples/$1"
   }
 }

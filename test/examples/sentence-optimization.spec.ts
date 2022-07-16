@@ -1,11 +1,11 @@
 import { Simulation } from "@/main";
-import { SentenceGenerator } from "../../examples/sentence-optimization/sentence-generator";
+import { SentenceGenerator } from "@examples/sentence-optimization/sentence-generator";
 import {
     sentenceMixFunction,
     sentenceMutationFunction,
     sentenceSelectionFunction, sentenceSortFunction, sentenceSplitFunction, sentenceStopCondition
-} from "../../examples/sentence-optimization/sentence-functions";
-import { SentenceConstants } from "../../examples/sentence-optimization/constants";
+} from "@examples/sentence-optimization/sentence-functions";
+import { SentenceConstants } from "@examples/sentence-optimization/constants";
 
 describe("sentence optimization tests", () => {
     const numberOfAgents = 500;

@@ -7,7 +7,7 @@ export class Sentence extends Agent<string[]>{
 
     constructor(protected sentence: string) {
         super();
-        this._genome = [new Chromosome(sentence.split(""))];
+        this._genome = [sentence.split("")];
     }
 
     get genome(): Genome<string[]>{
@@ -16,7 +16,7 @@ export class Sentence extends Agent<string[]>{
 
     getScore(): Promise<number> {
         const expected = SentenceConstants.EXPECTED_RESULT;
-        const actual = this.genome[0].getGenes();
+        const actual = this.genome[0];
         const scores = expected.split("").map((letter, index) => {
             return letter === actual[index] ? 1 : 0;
         });

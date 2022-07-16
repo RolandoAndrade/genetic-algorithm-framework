@@ -19,22 +19,22 @@ export const sentenceSplitFunction: SplitFunction<string[]> = (a, b) => {
     const aSplits: [Accepted, Rejected] = [[], []];
     const bSplits: [Rejected, Accepted] = [[], []];
     // Randomly accept a gen from a or b
-    for (let i = 0; i < a.getGenes().length; i++) {
-        if (SentenceConstants.EXPECTED_RESULT[i] === a.getGenes()[i]) {
-            aSplits[0].push(a.getGenes()[i]);
-            bSplits[0].push(b.getGenes()[i]);
-        } else if (SentenceConstants.EXPECTED_RESULT[i] === b.getGenes()[i]) {
-            aSplits[1].push(a.getGenes()[i]);
-            bSplits[1].push(b.getGenes()[i]);
+    for (let i = 0; i < a.length; i++) {
+        if (SentenceConstants.EXPECTED_RESULT[i] === a[i]) {
+            aSplits[0].push(a[i]);
+            bSplits[0].push(b[i]);
+        } else if (SentenceConstants.EXPECTED_RESULT[i] === b[i]) {
+            aSplits[1].push(a[i]);
+            bSplits[1].push(b[i]);
         } else {
             const shouldAccept = Math.random() < 0.5;
             if (shouldAccept) {
-                aSplits[0].push(a.getGenes()[i]);
-                bSplits[0].push(b.getGenes()[i]);
+                aSplits[0].push(a[i]);
+                bSplits[0].push(b[i]);
             }
             else {
-                aSplits[1].push(a.getGenes()[i]);
-                bSplits[1].push(b.getGenes()[i]);
+                aSplits[1].push(a[i]);
+                bSplits[1].push(b[i]);
             }
         }
     }

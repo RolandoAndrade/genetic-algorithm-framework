@@ -6,7 +6,7 @@ describe("chromosome tests", () => {
         it('should return the genes', () => {
             const genes = [1, 2, 3];
             const chromosome = new Chromosome(genes);
-            expect(chromosome.getGenes()).toEqual(genes);
+            expect(chromosome).toEqual(genes);
         });
     });
 
@@ -15,8 +15,8 @@ describe("chromosome tests", () => {
         const chromosomeB = new Chromosome<number[]>([0, 0, 1, 1, 0, 1, 0, 1]);
 
         const splitFunction: SplitFunction<number[]> = jest.fn((chromosomeA, chromosomeB) => {
-            const chromosomeASplits = [chromosomeA.getGenes().slice(0, 4), chromosomeA.getGenes().slice(4)];
-            const chromosomeBSplits = [chromosomeB.getGenes().slice(0, 4), chromosomeB.getGenes().slice(4)];
+            const chromosomeASplits = [chromosomeA.slice(0, 4), chromosomeA.slice(4)];
+            const chromosomeBSplits = [chromosomeB.slice(0, 4), chromosomeB.slice(4)];
             return [chromosomeASplits, chromosomeBSplits];
         });
 
@@ -37,7 +37,7 @@ describe("chromosome tests", () => {
 
         it("should create the correct chromosome", () => {
             const newChromosome = Chromosome.crossover(chromosomeA, chromosomeB, splitFunction, mixFunction, mutationFunction);
-            expect(newChromosome.getGenes()).toEqual([0, 1, 0, 1, 0, 1, 0, 1]);
+            expect(newChromosome).toEqual([0, 1, 0, 1, 0, 1, 0, 1]);
         });
     });
 });

@@ -9,8 +9,8 @@ export class SentenceGenerator extends AgentGenerator<string[]> {
     }
 
 
-    createAgentFromGenome(genome: Chromosome<string[]>[]): Sentence {
-        const genesAsSentence = genome[0].getGenes().join("");
+    createAgentFromGenome(genome: string[][]): Sentence {
+        const genesAsSentence = genome[0].join("");
         return new Sentence(genesAsSentence);
     }
 

@@ -33,14 +33,14 @@ class TestAgent extends Agent<number[]>{
 describe("agent tests", () => {
     describe("crossover", () => {
         const agentA = new TestAgent([
-            new Chromosome([0, 0, 0, 0, 0, 0, 0, 0]),
-            new Chromosome([0, 0, 0, 0, 0, 0, 0, 0]),
-            new Chromosome([0, 0, 0, 0, 0, 0, 0, 0]),
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
         ]);
         const agentB = new TestAgent([
-            new Chromosome([1, 1, 1, 1, 1, 1, 1, 1]),
-            new Chromosome([1, 1, 1, 1, 1, 1, 1, 1]),
-            new Chromosome([1, 1, 1, 1, 1, 1, 1, 1]),
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
         ]);
 
         it("should crossover the genomes", () => {

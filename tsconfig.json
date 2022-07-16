@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2015",
+    "allowJs": false,
     "sourceMap": true,
     "declaration": true,
     "outDir": "./dist",
@@ -20,7 +21,5 @@
   },
   "exclude": [
     "node_modules",
-    "examples",
-    "test"
   ]
 }

@@ -7,7 +7,7 @@
   "scripts": {
     "docs": "typedoc",
     "test": "test",
-    "build": "tsc && tsc-alias",
+    "build": "tsc -p tsconfig.build.json && tsc-alias",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint --ext .ts src",
     "prepare": "npm run build",

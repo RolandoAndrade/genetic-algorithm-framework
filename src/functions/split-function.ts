@@ -1,5 +1,4 @@
-import { Chromosome } from "../main/chromosome";
-import { DefaultGenType } from "../types";
+import { DefaultGenesType } from "@/types";
 
 /**
  * @description Defines the split function.
@@ -9,8 +8,11 @@ import { DefaultGenType } from "../types";
  *
  * @param chromosomeA The first chromosome to split.
  * @param chromosomeB The second chromosome to split.
+ * @typeParam ChromosomeType The type of the group of genes that forms the genome.
+ * @returns A tuple. The first element has an array with the split genes of the first chromosome and the second element
+ * has an array with the split genes of the second chromosome.
  * */
-export type SplitFunction<GenType = DefaultGenType> = (
-    chromosomeA: Chromosome<GenType>,
-    chromosomeB: Chromosome<GenType>,
-) => [GenType[], GenType[]];
+export type SplitFunction<ChromosomeType = DefaultGenesType> = (
+    chromosomeA: ChromosomeType,
+    chromosomeB: ChromosomeType,
+) => [ChromosomeType[], ChromosomeType[]];

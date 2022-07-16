@@ -1,13 +1,14 @@
 import { MixFunction, MutationFunction, SplitFunction } from "../functions";
-import { DefaultGenType } from "../types";
+import { DefaultGenesType } from "../types";
 
 /**
+ * @deprecated
  * @description Chromosome class.
  *
  * A chromosome is a set of genes that represent a virtual entity. They are used to generate an output and
  * are cross-overed to generate new chromosomes after each generation.
  * */
-export class Chromosome<GenType = DefaultGenType> {
+export class Chromosome<GenType = DefaultGenesType> {
     /**
      * @description Creates a new chromosome cross-over with the given chromosome.
      * @param chromosomeA The first chromosome to cross-over.
@@ -17,17 +18,18 @@ export class Chromosome<GenType = DefaultGenType> {
      * @param mutationFunction The function used to mutate the genes of the chromosome.
      * @returns The new chromosome.
      * */
-    public static crossover<GenType = DefaultGenType>(
+    public static crossover<GenType = DefaultGenesType>(
         chromosomeA: Chromosome<GenType>,
         chromosomeB: Chromosome<GenType>,
         splitFunction: SplitFunction<GenType>,
         mixFunction: MixFunction<GenType>,
         mutationFunction: MutationFunction<GenType>,
     ): Chromosome<GenType> {
-        const [chromosomeASplits, chromosomeBSplits] = splitFunction(chromosomeA, chromosomeB);
+        /*const [chromosomeASplits, chromosomeBSplits] = splitFunction(chromosomeA, chromosomeB);
         const newGenes = mixFunction(chromosomeASplits, chromosomeBSplits);
         const mutatedGenes = mutationFunction(newGenes);
-        return new Chromosome<GenType>(mutatedGenes);
+        return new Chromosome<GenType>(mutatedGenes);*/
+        throw new Error("Deprecated");
     }
 
     /**

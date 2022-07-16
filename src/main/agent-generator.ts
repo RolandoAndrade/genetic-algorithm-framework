@@ -1,20 +1,22 @@
-import { DefaultFitnessType, DefaultGenType } from "@/types";
+import { DefaultFitnessType, DefaultGenesType, Genome } from "@/types";
 import { Agent } from "@/main/agent";
-import { Chromosome } from "@/main/chromosome";
 
 /**
  * @description Creates new agents.
+ *
+ * @typeParam ChromosomeType The type of the group of genes that forms the genome.
+ * @typeParam FitnessType The type of the fitness score.
  * */
-export abstract class AgentGenerator<GenType = DefaultGenType, FitnessType = DefaultFitnessType> {
+export abstract class AgentGenerator<ChromosomeType = DefaultGenesType, FitnessType = DefaultFitnessType> {
     /**
      * @description Creates a new agent with random genes.
      * */
-    public abstract createRandomAgent(): Agent<GenType, FitnessType>;
+    public abstract createRandomAgent(): Agent<ChromosomeType, FitnessType>;
 
     /**
      * @description Creates a new agent from its genome.
      * */
-    public abstract createAgentFromGenome(genome: Chromosome<GenType>[]): Agent<GenType, FitnessType>;
+    public abstract createAgentFromGenome(genome: Genome<ChromosomeType>): Agent<ChromosomeType, FitnessType>;
 
     /**
      * @description Creates a new group of agents.
@@ -31,11 +33,11 @@ export abstract class AgentGenerator<GenType = DefaultGenType, FitnessType = Def
      * @returns The new population of agents.
      * */
     public createPopulation(
-        currentPopulation: Agent<GenType, FitnessType>[],
-        survivors: Agent<GenType, FitnessType>[],
-        children: Agent<GenType, FitnessType>[],
+        currentPopulation: Agent<ChromosomeType, FitnessType>[],
+        survivors: Agent<ChromosomeType, FitnessType>[],
+        children: Agent<ChromosomeType, FitnessType>[],
         nextGeneration: number,
-    ): Agent<GenType, FitnessType>[] {
+    ): Agent<ChromosomeType, FitnessType>[] {
         const populationSize = currentPopulation.length;
         const newPopulation = [...survivors, ...children];
         while (newPopulation.length < populationSize) {
@@ -47,5 +49,5 @@ export abstract class AgentGenerator<GenType = DefaultGenType, FitnessType = Def
     /**
      * @description Creates a random initial population of agents.
      * */
-    public abstract createInitialPopulation(): Agent<GenType, FitnessType>[];
+    public abstract createInitialPopulation(): Agent<ChromosomeType, FitnessType>[];
 }

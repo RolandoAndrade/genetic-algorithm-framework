@@ -1,20 +1,28 @@
-import { DefaultFitnessType, DefaultGenType, SimulationOptions, SimulationStats, AgentWithScore } from "../types";
-import { StopCondition } from "../functions";
+import { DefaultFitnessType, DefaultGenesType, SimulationOptions, SimulationStats, AgentWithScore } from "@/types";
+import { StopCondition } from "@/functions";
 import { Agent } from "./agent";
-import { shuffle } from "../utils";
+import { shuffle } from "@/utils";
 
-type AgentParents<GenType, FitnessType> = IterableIterator<[Agent<GenType, FitnessType>, Agent<GenType, FitnessType>]>;
+/**
+ * @description Group of two agents.
+ * */
+type AgentParents<ChromosomeType, FitnessType> = IterableIterator<[Agent<ChromosomeType, FitnessType>, Agent<ChromosomeType, FitnessType>]>;
 
-export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessType> {
+/**
+ * @description Simulates a genetic algorithm.
+ * @typeParam ChromosomeType The type of the group of genes that forms the genome.
+ * @typeParam FitnessType The type of the fitness score.
+ * */
+export class Simulation<ChromosomeType = DefaultGenesType, FitnessType = DefaultFitnessType> {
     /** Population of the simulation */
-    protected population: Agent<GenType, FitnessType>[] = [];
+    protected population: Agent<ChromosomeType, FitnessType>[] = [];
     /** Defines the current generation of the simulation */
     protected currentGeneration = 0;
 
     /**
      * @param properties The simulation options.
      * */
-    constructor(protected readonly properties: SimulationOptions<GenType, FitnessType>) {
+    constructor(protected readonly properties: SimulationOptions<ChromosomeType, FitnessType>) {
         this.population = this.properties.agentGenerator.createInitialPopulation();
     }
 
@@ -33,7 +41,7 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
      * @param scores The scores of the agents.
      * @returns The stats of the obtained scores.
      * */
-    protected computeStats(scores: AgentWithScore<GenType, FitnessType>[]): SimulationStats<GenType, FitnessType> {
+    protected computeStats(scores: AgentWithScore<ChromosomeType, FitnessType>[]): SimulationStats<ChromosomeType, FitnessType> {
         return {
             currentGeneration: this.currentGeneration,
             highestScore: scores.at(0)?.score,
@@ -47,7 +55,7 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
      * @param scores The scores of the agents.
      * @returns The sorted agents with an appended score field.
      * */
-    protected sortByScore(scores: FitnessType[]): AgentWithScore<GenType, FitnessType>[] {
+    protected sortByScore(scores: FitnessType[]): AgentWithScore<ChromosomeType, FitnessType>[] {
         const agents = this.population.map((agent, index) => ({ agent, score: scores.at(index) }));
         return this.properties.sortFunction(agents);
     }
@@ -57,7 +65,7 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
      * @param agents The selected agents.
      * @returns A generator of pairs of parents.
      * */
-    protected *getParents(agents: Agent<GenType, FitnessType>[]): AgentParents<GenType, FitnessType> {
+    protected *getParents(agents: Agent<ChromosomeType, FitnessType>[]): AgentParents<ChromosomeType, FitnessType> {
         // randomize the order of the agents
         const shuffledAgents = shuffle(agents);
         // for each pair of agents, append the pair to the parents array
@@ -71,7 +79,7 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
      * @param parents The generator of the selected agents.
      * @returns The children of the selected agents.
      * */
-    protected generateChildren(parents: AgentParents<GenType, FitnessType>): Agent<GenType, FitnessType>[] {
+    protected generateChildren(parents: AgentParents<ChromosomeType, FitnessType>): Agent<ChromosomeType, FitnessType>[] {
         const children = [];
         for (const couple of parents) {
             const [parent1, parent2] = couple;
@@ -95,14 +103,14 @@ export class Simulation<GenType = DefaultGenType, FitnessType = DefaultFitnessTy
      * @returns The final population of agents.
      * */
     public async run(
-        stopCondition: StopCondition<GenType, FitnessType> = () => true,
+        stopCondition: StopCondition<ChromosomeType, FitnessType> = () => true,
         fromStart = true,
-    ): Promise<SimulationStats<GenType, FitnessType>> {
+    ): Promise<SimulationStats<ChromosomeType, FitnessType>> {
         if (fromStart) {
             this.population = this.properties.agentGenerator.createInitialPopulation();
             this.currentGeneration = 0;
         }
-        let stats: SimulationStats<GenType, FitnessType>;
+        let stats: SimulationStats<ChromosomeType, FitnessType>;
         do {
             const scores = await this.computeScores();
             const agentWithScores = this.sortByScore(scores);

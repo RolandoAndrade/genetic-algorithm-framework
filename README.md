@@ -4,7 +4,51 @@
 
 Small framework for genetic algorithms.
 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <ol>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#using-the-framework">Using the framework</a>
+      <ul>
+        <li><a href="#creating-a-new-agent">Creating a new agent</a></li>
+        <li><a href="#defining-the-genetic-functions">Defining the genetic functions</a>
+            <ul>
+                <li><a href="#split-function">Split function</a></li>
+                <li><a href="#mix-function">Mix function</a></li>
+                <li><a href="#mutation-function">Mutation function</a></li>
+            </ul>
+        </li>
+        <li><a href="#defining-the-simulation-functions">Defining the simulation functions</a>
+            <ul>
+                <li><a href="#sort-function">Sort function</a></li>
+                <li><a href="#selection-function">Selection function</a></li>
+                <li><a href="#stop-condition">Stop condition</a></li>
+            </ul>
+        </li>
+        <li><a href="#define-the-agent-generator">Define the agent generator</a></li>
+        <li><a href="#creating-and-running-a-simulation">Creating and running a simulation</a></li>
+        <li><a href="#that's-it">That's it</a></li>
+      </ul>
+    </li>
+    <li><a href="#examples">Examples</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
+
 ## Getting Started
+
+### Prerequisites
+
+* node >= 14
 
 ### Installation
 
@@ -152,5 +196,92 @@ export const stopCondition: StopCondition<number[]> = (population: Agent<number[
 }
 ```
 
-#### Creating a simulation
+#### Define the agent generator
+The agent generator indicates how agents will be generated. You need to create a new one extending
+the `AgentGenerator` class. Example:
 
+```typescript
+// Import the required components.
+import { AgentGenerator } from 'genetic-algorithm-framework';
+
+// Define the agent generator.
+export class MyAgentGenerator extends AgentGenerator<number[]> {
+    constructor(protected numberOfAgents: number) {
+        super();
+    }
+
+    createAgentFromGenome(genome: Genome<number>): MyAgent {
+        throw new Error('Here you should create a new agent from the genome.');
+    }
+
+    createInitialPopulation(): MyAgent[] {
+        const agents =  [];
+        for (let i = 0; i < this.numberOfAgents; i++) {
+            agents.push(this.createRandomAgent());
+        }
+        return agents;
+    }
+
+    createRandomAgent(): MyAgent {
+        throw new Error('Here you should create a new random agent');
+    }
+}
+```
+
+#### Creating and running a simulation
+
+The simulation executes the genetic algorithm. Create a new simulation instance defining the functions and the agent generator, 
+then run the simulation.
+
+```typescript
+// Import the required components.
+import { Simulation } from 'genetic-algorithm-framework';
+
+// Create the simulation.
+const simulation = new Simulation({
+    agentGenerator: new MyAgentGenerator(2),
+    mixFunction: rgbMixFunction,
+    mutationFunction: rgbMutationFunction,
+    selectionFunction: rgbSelectionFunction,
+    sortFunction: rgbSortFunction,
+    splitFunction: rgbSplitFunction
+});
+
+// Run the simulation.
+(async ()=> simulation.run(stopCondition))();
+```
+
+The simulation returns a data structure with the stats of the last run.
+
+
+#### That's it
+
+You can use your own datastructures and libraries to implement the functions and dedicate your
+time to the implementation of the agent environments.
+
+### Examples
+
+You can find some examples in the `examples` directory.
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/your_feature`)
+3. Commit your Changes (`git commit -m 'Add a feature'`)
+4. Push to the Branch (`git push origin feature/your_feature`)
+5. Open a Pull Request
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<!-- CONTACT -->
+## Contact
+
+RolandoAndrade - [GitHub](https://github.com/RolandoAndrade)
+
+Project Link: [General Simulation Framework](https://github.com/RolandoAndrade/general-simulation-framework)

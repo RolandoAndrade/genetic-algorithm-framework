@@ -1,4 +1,4 @@
-import { Agent, AgentGenerator, Chromosome } from "@/main";
+import { Agent, AgentGenerator } from "@/main";
 import { Genome } from "@/types";
 import { MixFunction, MutationFunction, SplitFunction } from "@/functions";
 

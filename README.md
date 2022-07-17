@@ -259,7 +259,7 @@ The simulation returns a data structure with the stats of the last run.
 You can use your own datastructures and libraries to implement the functions and dedicate your
 time to the implementation of the agent environments.
 
-### Examples
+## Examples
 
 You can find some examples in the `examples` directory.
 

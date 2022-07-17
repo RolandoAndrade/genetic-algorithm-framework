@@ -1,4 +1,4 @@
-import { Agent, Chromosome } from "@/main";
+import { Agent } from "@/main";
 import { Genome } from "@/types";
 import { SentenceConstants } from "./constants";
 

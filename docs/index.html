@@ -17,10 +17,57 @@
 <p><a href="https://www.npmjs.com/package/genetic-algorithm-framework"><img src="https://img.shields.io/npm/v/genetic-algorithm-framework" alt="NPM Version"></a>
 <a href="https://github.com/RolandoAndrade/general-simulation-framework/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Naereen/StrapDown.js.svg" alt="GitHub license"></a></p>
 <p>Small framework for genetic algorithms.</p>
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <ol>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#using-the-framework">Using the framework</a>
+      <ul>
+        <li><a href="#creating-a-new-agent">Creating a new agent</a></li>
+        <li><a href="#defining-the-genetic-functions">Defining the genetic functions</a>
+            <ul>
+                <li><a href="#split-function">Split function</a></li>
+                <li><a href="#mix-function">Mix function</a></li>
+                <li><a href="#mutation-function">Mutation function</a></li>
+            </ul>
+        </li>
+        <li><a href="#defining-the-simulation-functions">Defining the simulation functions</a>
+            <ul>
+                <li><a href="#sort-function">Sort function</a></li>
+                <li><a href="#selection-function">Selection function</a></li>
+                <li><a href="#stop-condition">Stop condition</a></li>
+            </ul>
+        </li>
+        <li><a href="#define-the-agent-generator">Define the agent generator</a></li>
+        <li><a href="#creating-and-running-a-simulation">Creating and running a simulation</a></li>
+        <li><a href="#that's-it">That's it</a></li>
+      </ul>
+    </li>
+    <li><a href="#examples">Examples</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
+
 
 <a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
   <h2>Getting Started</h2>
 </a>
+
+<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
+  <h3>Prerequisites</h3>
+</a>
+<ul>
+<li>node &gt;= 14</li>
+</ul>
 
 <a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
   <h3>Installation</h3>
@@ -28,19 +75,128 @@
 <pre><code class="language-bash"><span class="hl-0">npm install genetic-algorithm-framework</span>
 </code></pre>
 
-<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-  <h3>Usage</h3>
+<a href="#using-the-framework" id="using-the-framework" style="color: inherit; text-decoration: none;">
+  <h3>Using the framework</h3>
 </a>
 
 <a href="#creating-a-new-agent" id="creating-a-new-agent" style="color: inherit; text-decoration: none;">
   <h4>Creating a new agent</h4>
 </a>
-<p>An agent is a virtual entity that can be placed in a simulation. It contains a set of chromosomes and compute
-a fitness value that is used during the selection and crossover process.</p>
-<pre><code class="language-typescript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">Agent</span><span class="hl-0">, </span><span class="hl-2">Genome</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">// Receives as type parameter the type of the group of genes that will be</span><br/><span class="hl-4">// encapsulated into a chromosome.</span><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-5">class</span><span class="hl-0"> </span><span class="hl-6">MyAgent</span><span class="hl-0"> </span><span class="hl-5">extends</span><span class="hl-0"> </span><span class="hl-6">Agent</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; {</span><br/><span class="hl-0">    </span><span class="hl-5">constructor</span><span class="hl-0">() {</span><br/><span class="hl-0">        </span><span class="hl-5">super</span><span class="hl-0">();</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-5">get</span><span class="hl-0"> </span><span class="hl-7">genome</span><span class="hl-0">(): </span><span class="hl-6">Genome</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; {</span><br/><span class="hl-0">        </span><span class="hl-1">throw</span><span class="hl-0"> </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-6">Error</span><span class="hl-0">(</span><span class="hl-3">&#39;Here you should return the chromosomes of the agent used to compute the score.&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-7">getScore</span><span class="hl-0">(): </span><span class="hl-6">Promise</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">&gt; {</span><br/><span class="hl-0">        </span><span class="hl-1">throw</span><span class="hl-0"> </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-6">Error</span><span class="hl-0">(</span><span class="hl-3">&#39;Here you should return the score of the agent used for the selection process.&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">}</span>
+<p>An agent is a virtual entity that can be placed in a simulation. It contains a set of chromosomes of type <code>ChromosomeType[]</code> and compute
+a fitness value of type <code>FitnessType</code> that is used during the selection and crossover process.</p>
+<pre><code class="language-typescript"><span class="hl-1">// Import the required components.</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">Agent</span><span class="hl-0">, </span><span class="hl-3">Genome</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">// Create a new agent that will have a genome compounded by genes of type number that form a chromosome of type number[].</span><br/><span class="hl-2">export</span><span class="hl-0"> </span><span class="hl-5">class</span><span class="hl-0"> </span><span class="hl-6">MyAgent</span><span class="hl-0"> </span><span class="hl-5">extends</span><span class="hl-0"> </span><span class="hl-6">Agent</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; {</span><br/><span class="hl-0">    </span><span class="hl-5">constructor</span><span class="hl-0">() {</span><br/><span class="hl-0">        </span><span class="hl-5">super</span><span class="hl-0">();</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-5">get</span><span class="hl-0"> </span><span class="hl-7">genome</span><span class="hl-0">(): </span><span class="hl-6">Genome</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; {</span><br/><span class="hl-0">        </span><span class="hl-2">throw</span><span class="hl-0"> </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-6">Error</span><span class="hl-0">(</span><span class="hl-4">&#39;Here you should return the chromosomes of the agent used to compute the score.&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-7">getScore</span><span class="hl-0">(): </span><span class="hl-6">Promise</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">&gt; {</span><br/><span class="hl-0">        </span><span class="hl-2">throw</span><span class="hl-0"> </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-6">Error</span><span class="hl-0">(</span><span class="hl-4">&#39;Here you should return the score of the agent used for the selection process.&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">}</span>
 </code></pre>
 <p>You should define the <code>genome</code> getter and the <code>getScore</code> method that will be used by the
-framework to compute the fitness value of the agent and the selection process.</p>
+framework to compute the fitness value of the agent, the selection process and the crossover operations.</p>
+
+<a href="#defining-the-genetic-functions" id="defining-the-genetic-functions" style="color: inherit; text-decoration: none;">
+  <h4>Defining the genetic functions</h4>
+</a>
+<p>You must define the following functions:</p>
+
+<a href="#split-function" id="split-function" style="color: inherit; text-decoration: none;">
+  <h5>Split Function</h5>
+</a>
+<p>During the crossover process, the framework will request separate the chromosomes of the parents to mix them.
+The split function divide the chromosomes in many parts and returns them in a tuple of two components. Example:</p>
+<pre><code class="language-typescript"><span class="hl-1">// Import the required components.</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">SplitFunction</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">// Define the split function.</span><br/><span class="hl-2">export</span><span class="hl-0"> </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-7">split</span><span class="hl-0">: </span><span class="hl-6">SplitFunction</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; = (</span><span class="hl-3">chromosomeA</span><span class="hl-0">: </span><span class="hl-6">number</span><span class="hl-0">[], </span><span class="hl-3">chromosomeB</span><span class="hl-0">: </span><span class="hl-6">number</span><span class="hl-0">[]): [</span><span class="hl-6">number</span><span class="hl-0">[], </span><span class="hl-6">number</span><span class="hl-0">[]] </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-1">// divide a in two parts.</span><br/><span class="hl-0">    </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">a1</span><span class="hl-0"> = </span><span class="hl-3">chromosomeA</span><span class="hl-0">.</span><span class="hl-7">slice</span><span class="hl-0">(</span><span class="hl-9">0</span><span class="hl-0">, </span><span class="hl-3">a</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> / </span><span class="hl-9">2</span><span class="hl-0">);</span><br/><span class="hl-0">    </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">a2</span><span class="hl-0"> = </span><span class="hl-3">chromosomeA</span><span class="hl-0">.</span><span class="hl-7">slice</span><span class="hl-0">(</span><span class="hl-3">a</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> / </span><span class="hl-9">2</span><span class="hl-0">);</span><br/><span class="hl-0">    </span><span class="hl-1">// divide b in two parts.</span><br/><span class="hl-0">    </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">b1</span><span class="hl-0"> = </span><span class="hl-3">chromosomeB</span><span class="hl-0">.</span><span class="hl-7">slice</span><span class="hl-0">(</span><span class="hl-9">0</span><span class="hl-0">, </span><span class="hl-3">b</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> / </span><span class="hl-9">2</span><span class="hl-0">);</span><br/><span class="hl-0">    </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">b2</span><span class="hl-0"> = </span><span class="hl-3">chromosomeB</span><span class="hl-0">.</span><span class="hl-7">slice</span><span class="hl-0">(</span><span class="hl-3">b</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> / </span><span class="hl-9">2</span><span class="hl-0">);</span><br/><span class="hl-0">    </span><span class="hl-1">// return the splits.</span><br/><span class="hl-0">    </span><span class="hl-2">return</span><span class="hl-0"> [[</span><span class="hl-3">a1</span><span class="hl-0">, </span><span class="hl-3">a2</span><span class="hl-0">], [</span><span class="hl-3">b1</span><span class="hl-0">, </span><span class="hl-3">b2</span><span class="hl-0">]];</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#mix-function" id="mix-function" style="color: inherit; text-decoration: none;">
+  <h5>Mix Function</h5>
+</a>
+<p>After splitting the chromosomes, the framework will mix the genes to create a new chromosome.
+The process is defined by the mix function. Example:</p>
+<pre><code class="language-typescript"><span class="hl-1">// Import the required components.</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">MixFunction</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">// Define the mix function.</span><br/><span class="hl-2">export</span><span class="hl-0"> </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-7">mix</span><span class="hl-0">: </span><span class="hl-6">MixFunction</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; = (</span><span class="hl-3">genesSplitA</span><span class="hl-0">: </span><span class="hl-6">number</span><span class="hl-0">[][], </span><span class="hl-3">genesSplitB</span><span class="hl-0">: </span><span class="hl-6">number</span><span class="hl-0">[][]): </span><span class="hl-6">number</span><span class="hl-0">[] </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-1">// Acept the first split from a.</span><br/><span class="hl-0">    </span><span class="hl-5">const</span><span class="hl-0"> [</span><span class="hl-8">aAccepted</span><span class="hl-0">,] = </span><span class="hl-3">a</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">// Accept the second split from b.</span><br/><span class="hl-0">    </span><span class="hl-5">const</span><span class="hl-0"> [, </span><span class="hl-8">bAccepted</span><span class="hl-0">] = </span><span class="hl-3">b</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">// return the mixed chromosome.</span><br/><span class="hl-0">    </span><span class="hl-2">return</span><span class="hl-0"> [...</span><span class="hl-3">aAccepted</span><span class="hl-0">, ...</span><span class="hl-3">bAccepted</span><span class="hl-0">]</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#mutation-function" id="mutation-function" style="color: inherit; text-decoration: none;">
+  <h5>Mutation Function</h5>
+</a>
+<p>The mutation function is used to mutate the generated chromosome. Example:</p>
+<pre><code class="language-typescript"><span class="hl-1">// Import the required components.</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">MutationFunction</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">// Define the mutation function.</span><br/><span class="hl-2">export</span><span class="hl-0"> </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-7">mutation</span><span class="hl-0">: </span><span class="hl-6">MutationFunction</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; = (</span><span class="hl-3">chromosome</span><span class="hl-0">: </span><span class="hl-6">number</span><span class="hl-0">[]): </span><span class="hl-6">number</span><span class="hl-0">[] </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-1">// if probability is greater than 0.5, mutate a gen in the chromosome.</span><br/><span class="hl-0">    </span><span class="hl-2">if</span><span class="hl-0"> (</span><span class="hl-6">Math</span><span class="hl-0">.</span><span class="hl-7">random</span><span class="hl-0">() &gt; </span><span class="hl-9">0.5</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-1">// Select a random gene.</span><br/><span class="hl-0">        </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">index</span><span class="hl-0"> = </span><span class="hl-6">Math</span><span class="hl-0">.</span><span class="hl-7">floor</span><span class="hl-0">(</span><span class="hl-6">Math</span><span class="hl-0">.</span><span class="hl-7">random</span><span class="hl-0">() * </span><span class="hl-3">chromosome</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0">);</span><br/><span class="hl-0">        </span><span class="hl-1">// Mutate the gene.</span><br/><span class="hl-0">        </span><span class="hl-3">chromosome</span><span class="hl-0">[</span><span class="hl-3">index</span><span class="hl-0">] = </span><span class="hl-6">Math</span><span class="hl-0">.</span><span class="hl-7">floor</span><span class="hl-0">(</span><span class="hl-6">Math</span><span class="hl-0">.</span><span class="hl-7">random</span><span class="hl-0">() * </span><span class="hl-9">100</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-2">return</span><span class="hl-0"> </span><span class="hl-3">chromosome</span><span class="hl-0">;</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#defining-the-simulation-functions" id="defining-the-simulation-functions" style="color: inherit; text-decoration: none;">
+  <h4>Defining the simulation functions</h4>
+</a>
+<p>During the simulation the framework requires the definition of the following functions:</p>
+
+<a href="#sort-function" id="sort-function" style="color: inherit; text-decoration: none;">
+  <h5>Sort Function</h5>
+</a>
+<p>Defines how the framework will sort the agents with the calculated fitness value before the selection. Example:</p>
+<pre><code class="language-typescript"><span class="hl-1">// Import the required components.</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">SortFunction</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">// Define the sort function.</span><br/><span class="hl-2">export</span><span class="hl-0"> </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-7">sort</span><span class="hl-0">: </span><span class="hl-6">SortFunction</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; = (</span><span class="hl-3">agents</span><span class="hl-0">: </span><span class="hl-6">AgentWithScore</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt;[]): </span><span class="hl-6">AgentWithScore</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt;[] </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-1">// Sort the agents by their fitness value on descending order.</span><br/><span class="hl-0">    </span><span class="hl-2">return</span><span class="hl-0"> </span><span class="hl-3">agents</span><span class="hl-0">.</span><span class="hl-7">sort</span><span class="hl-0">((</span><span class="hl-3">a</span><span class="hl-0">, </span><span class="hl-3">b</span><span class="hl-0">) </span><span class="hl-5">=&gt;</span><span class="hl-0"> </span><span class="hl-3">b</span><span class="hl-0">.</span><span class="hl-3">score</span><span class="hl-0"> - </span><span class="hl-3">a</span><span class="hl-0">.</span><span class="hl-3">score</span><span class="hl-0">);</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#selection-function" id="selection-function" style="color: inherit; text-decoration: none;">
+  <h5>Selection Function</h5>
+</a>
+<p>Indicates how the framework will select the agents to be used in the crossover process.
+Receives as a param a group of agents with the calculated fitness value, ordered by this value. Example:</p>
+<pre><code class="language-typescript"><span class="hl-1">// Import the required components.</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">SelectionFunction</span><span class="hl-0">, </span><span class="hl-3">AgentWithScore</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">// Define the selection function.</span><br/><span class="hl-2">export</span><span class="hl-0"> </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-7">selection</span><span class="hl-0">: </span><span class="hl-6">SelectionFunction</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; = (</span><span class="hl-3">agentsWithScore</span><span class="hl-0">: </span><span class="hl-6">AgentWithScore</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt;[]): </span><span class="hl-6">Agent</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt;[] </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-1">// Agents are sorted by score, so return the best agents.</span><br/><span class="hl-0">    </span><span class="hl-2">return</span><span class="hl-0"> </span><span class="hl-3">agentsWithScore</span><span class="hl-0">.</span><span class="hl-7">slice</span><span class="hl-0">(</span><span class="hl-9">0</span><span class="hl-0">, </span><span class="hl-3">agentsWithScore</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> / </span><span class="hl-9">2</span><span class="hl-0">).</span><span class="hl-7">map</span><span class="hl-0">(</span><span class="hl-3">a</span><span class="hl-0"> </span><span class="hl-5">=&gt;</span><span class="hl-0"> </span><span class="hl-3">a</span><span class="hl-0">.</span><span class="hl-3">agent</span><span class="hl-0">);</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#stop-condition" id="stop-condition" style="color: inherit; text-decoration: none;">
+  <h5>Stop condition</h5>
+</a>
+<p>Defines the condition that will stop the simulation. Example:</p>
+<pre><code class="language-typescript"><span class="hl-1">// Import the required components.</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">Agent</span><span class="hl-0">, </span><span class="hl-3">StopCondition</span><span class="hl-0">, </span><span class="hl-3">SimulationStats</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">// Define the stop condition.</span><br/><span class="hl-2">export</span><span class="hl-0"> </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-7">stopCondition</span><span class="hl-0">: </span><span class="hl-6">StopCondition</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; = (</span><span class="hl-3">population</span><span class="hl-0">: </span><span class="hl-6">Agent</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt;[], </span><span class="hl-3">stats</span><span class="hl-0">: </span><span class="hl-6">SimulationStats</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt;): </span><span class="hl-6">boolean</span><span class="hl-0"> </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-1">// Stop the simulation at generation 100.</span><br/><span class="hl-0">    </span><span class="hl-2">return</span><span class="hl-0"> </span><span class="hl-3">stats</span><span class="hl-0">.</span><span class="hl-3">currentGeneation</span><span class="hl-0"> == </span><span class="hl-9">100</span><span class="hl-0">;</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#define-the-agent-generator" id="define-the-agent-generator" style="color: inherit; text-decoration: none;">
+  <h4>Define the agent generator</h4>
+</a>
+<p>The agent generator indicates how agents will be generated. You need to create a new one extending
+the <code>AgentGenerator</code> class. Example:</p>
+<pre><code class="language-typescript"><span class="hl-1">// Import the required components.</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">AgentGenerator</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">// Define the agent generator.</span><br/><span class="hl-2">export</span><span class="hl-0"> </span><span class="hl-5">class</span><span class="hl-0"> </span><span class="hl-6">MyAgentGenerator</span><span class="hl-0"> </span><span class="hl-5">extends</span><span class="hl-0"> </span><span class="hl-6">AgentGenerator</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">[]&gt; {</span><br/><span class="hl-0">    </span><span class="hl-5">constructor</span><span class="hl-0">(</span><span class="hl-5">protected</span><span class="hl-0"> </span><span class="hl-3">numberOfAgents</span><span class="hl-0">: </span><span class="hl-6">number</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-5">super</span><span class="hl-0">();</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-7">createAgentFromGenome</span><span class="hl-0">(</span><span class="hl-3">genome</span><span class="hl-0">: </span><span class="hl-6">Genome</span><span class="hl-0">&lt;</span><span class="hl-6">number</span><span class="hl-0">&gt;): </span><span class="hl-6">MyAgent</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-2">throw</span><span class="hl-0"> </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-6">Error</span><span class="hl-0">(</span><span class="hl-4">&#39;Here you should create a new agent from the genome.&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-7">createInitialPopulation</span><span class="hl-0">(): </span><span class="hl-6">MyAgent</span><span class="hl-0">[] {</span><br/><span class="hl-0">        </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">agents</span><span class="hl-0"> =  [];</span><br/><span class="hl-0">        </span><span class="hl-2">for</span><span class="hl-0"> (</span><span class="hl-5">let</span><span class="hl-0"> </span><span class="hl-3">i</span><span class="hl-0"> = </span><span class="hl-9">0</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0"> &lt; </span><span class="hl-5">this</span><span class="hl-0">.</span><span class="hl-3">numberOfAgents</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">            </span><span class="hl-3">agents</span><span class="hl-0">.</span><span class="hl-7">push</span><span class="hl-0">(</span><span class="hl-5">this</span><span class="hl-0">.</span><span class="hl-7">createRandomAgent</span><span class="hl-0">());</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-2">return</span><span class="hl-0"> </span><span class="hl-3">agents</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-7">createRandomAgent</span><span class="hl-0">(): </span><span class="hl-6">MyAgent</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-2">throw</span><span class="hl-0"> </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-6">Error</span><span class="hl-0">(</span><span class="hl-4">&#39;Here you should create a new random agent&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#creating-and-running-a-simulation" id="creating-and-running-a-simulation" style="color: inherit; text-decoration: none;">
+  <h4>Creating and running a simulation</h4>
+</a>
+<p>The simulation executes the genetic algorithm. Create a new simulation instance defining the functions and the agent generator, 
+then run the simulation.</p>
+<pre><code class="language-typescript"><span class="hl-1">// Import the required components.</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">Simulation</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;genetic-algorithm-framework&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">// Create the simulation.</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">simulation</span><span class="hl-0"> = </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-7">Simulation</span><span class="hl-0">({</span><br/><span class="hl-0">    </span><span class="hl-3">agentGenerator:</span><span class="hl-0"> </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-7">MyAgentGenerator</span><span class="hl-0">(</span><span class="hl-9">2</span><span class="hl-0">),</span><br/><span class="hl-0">    </span><span class="hl-3">mixFunction:</span><span class="hl-0"> </span><span class="hl-3">rgbMixFunction</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-3">mutationFunction:</span><span class="hl-0"> </span><span class="hl-3">rgbMutationFunction</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-3">selectionFunction:</span><span class="hl-0"> </span><span class="hl-3">rgbSelectionFunction</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-3">sortFunction:</span><span class="hl-0"> </span><span class="hl-3">rgbSortFunction</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-3">splitFunction:</span><span class="hl-0"> </span><span class="hl-3">rgbSplitFunction</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-1">// Run the simulation.</span><br/><span class="hl-0">(</span><span class="hl-5">async</span><span class="hl-0"> ()</span><span class="hl-5">=&gt;</span><span class="hl-0"> </span><span class="hl-3">simulation</span><span class="hl-0">.</span><span class="hl-7">run</span><span class="hl-0">(</span><span class="hl-3">stopCondition</span><span class="hl-0">))();</span>
+</code></pre>
+<p>The simulation returns a data structure with the stats of the last run.</p>
+
+<a href="#that39s-it" id="that39s-it" style="color: inherit; text-decoration: none;">
+  <h4>That&#39;s it</h4>
+</a>
+<p>You can use your own datastructures and libraries to implement the functions and dedicate your
+time to the implementation of the agent environments.</p>
+
+<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+  <h2>Examples</h2>
+</a>
+<p>You can find some examples in the <code>examples</code> directory.</p>
+<!-- CONTRIBUTING -->
+
+<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+  <h2>Contributing</h2>
+</a>
+<p>Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are <strong>greatly appreciated</strong>.</p>
+<ol>
+<li>Fork the Project</li>
+<li>Create your Feature Branch (<code>git checkout -b feature/your_feature</code>)</li>
+<li>Commit your Changes (<code>git commit -m &#39;Add a feature&#39;</code>)</li>
+<li>Push to the Branch (<code>git push origin feature/your_feature</code>)</li>
+<li>Open a Pull Request</li>
+</ol>
+<!-- LICENSE -->
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>Distributed under the MIT License. See <code>LICENSE</code> for more information.</p>
+<!-- CONTACT -->
+
+<a href="#contact" id="contact" style="color: inherit; text-decoration: none;">
+  <h2>Contact</h2>
+</a>
+<p>RolandoAndrade - <a href="https://github.com/RolandoAndrade">GitHub</a></p>
+<p>Project Link: <a href="https://github.com/RolandoAndrade/general-simulation-framework">General Simulation Framework</a></p>
 </div></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
@@ -67,7 +223,6 @@ framework to compute the fitness value of the agent and the selection process.</
 <ul>
 <li class="tsd-kind-class"><a href="classes/Agent.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg>Agent</a></li>
 <li class="tsd-kind-class"><a href="classes/AgentGenerator.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Agent<wbr/>Generator</a></li>
-<li class="deprecated tsd-kind-class"><a href="classes/Chromosome.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Chromosome</a></li>
 <li class="tsd-kind-class"><a href="classes/Simulation.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Simulation</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/SimulationOptions.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-interface)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-256-path"></rect><path d="M9.51 16V15.016H11.298V8.224H9.51V7.24H14.19V8.224H12.402V15.016H14.19V16H9.51Z" fill="var(--color-text)" id="icon-256-text"></path></svg>Simulation<wbr/>Options</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/SimulationStats.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Simulation<wbr/>Stats</a></li>

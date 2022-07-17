@@ -284,4 +284,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 RolandoAndrade - [GitHub](https://github.com/RolandoAndrade)
 
-Project Link: [General Simulation Framework](https://github.com/RolandoAndrade/general-simulation-framework)
+Project Link: [Genetic Algorithm Framework](https://github.com/RolandoAndrade/genetic-algorithm-framework)

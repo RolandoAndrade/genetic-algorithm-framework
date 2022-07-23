@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "docs": "typedoc",
-    "test": "test",
+    "test": "jest",
     "build": "tsc -p tsconfig.build.json && tsc-alias",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint --ext .ts src",

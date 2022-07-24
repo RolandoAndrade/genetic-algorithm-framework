@@ -103,7 +103,7 @@ export class Simulation<ChromosomeType = DefaultGenesType, FitnessType = Default
      * @returns The final population of agents.
      * */
     public async run(
-        stopCondition: StopCondition<ChromosomeType, FitnessType> = () => true,
+        stopCondition: StopCondition<ChromosomeType, FitnessType> = () => false,
         fromStart = true,
     ): Promise<SimulationStats<ChromosomeType, FitnessType>> {
         if (fromStart) {

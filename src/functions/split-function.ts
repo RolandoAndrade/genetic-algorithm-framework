@@ -9,10 +9,11 @@ import { DefaultGenesType } from "@/types";
  * @param chromosomeA The first chromosome to split.
  * @param chromosomeB The second chromosome to split.
  * @typeParam ChromosomeType The type of the group of genes that forms the genome.
+ * @typeParam SplitGenesType The type of the split of the genes.
  * @returns A tuple. The first element has an array with the split genes of the first chromosome and the second element
  * has an array with the split genes of the second chromosome.
  * */
-export type SplitFunction<ChromosomeType = DefaultGenesType> = (
+export type SplitFunction<ChromosomeType = DefaultGenesType, SplitGenesType = ChromosomeType> = (
     chromosomeA: ChromosomeType,
     chromosomeB: ChromosomeType,
-) => [ChromosomeType[], ChromosomeType[]];
+) => [SplitGenesType[], SplitGenesType[]];

@@ -8,6 +8,7 @@ import { DefaultGenesType } from "@/types";
  * @param genesA The first split of the genes.
  * @param genesB The second split of the genes.
  * @typeParam ChromosomeType The type of the group of genes that forms the genome.
+ * @typeParam SplitGenesType The type of the split of the genes.
  * @returns The mixed genes.
  * */
-export type MixFunction<ChromosomeType = DefaultGenesType> = (genesA: ChromosomeType[], genesB: ChromosomeType[]) => ChromosomeType;
+export type MixFunction<ChromosomeType = DefaultGenesType, SplitGenesType = ChromosomeType> = (genesA: SplitGenesType[], genesB: SplitGenesType[]) => ChromosomeType;

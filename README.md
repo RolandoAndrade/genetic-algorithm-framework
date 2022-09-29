@@ -88,6 +88,8 @@ framework to compute the fitness value of the agent, the selection process and t
 
 #### Defining the genetic functions
 
+In this example, we assume a chromosome of type `number[]` and a fitness of type `number`. Types are added for verbosity, but can be inferred for you by TypeScript if omitted.
+
 You must define the following functions:
 
 ##### Split Function
@@ -99,13 +101,13 @@ The split function divide the chromosomes in many parts and returns them in a tu
 import { SplitFunction } from 'genetic-algorithm-framework';
 
 // Define the split function.
-export const split: SplitFunction<number[]> = (chromosomeA: number[], chromosomeB: number[]): [number[], number[]] => {
+export const split: SplitFunction<number[]> = (chromosomeA: number[], chromosomeB: number[]): [number[][], number[][]] => {
     // divide a in two parts.
-    const a1 = chromosomeA.slice(0, a.length / 2);
-    const a2 = chromosomeA.slice(a.length / 2);
+    const a1 = chromosomeA.slice(0, chromosomeA.length / 2);
+    const a2 = chromosomeA.slice(chromosomeA.length / 2);
     // divide b in two parts.
-    const b1 = chromosomeB.slice(0, b.length / 2);
-    const b2 = chromosomeB.slice(b.length / 2);
+    const b1 = chromosomeB.slice(0, chromosomeB.length / 2);
+    const b2 = chromosomeB.slice(chromosomeB.length / 2);
     // return the splits.
     return [[a1, a2], [b1, b2]];
 }
@@ -122,9 +124,9 @@ import { MixFunction } from 'genetic-algorithm-framework';
 // Define the mix function.
 export const mix: MixFunction<number[]> = (genesSplitA: number[][], genesSplitB: number[][]): number[] => {
     // Acept the first split from a.
-    const [aAccepted,] = a;
+    const [aAccepted,] = genesSplitA;
     // Accept the second split from b.
-    const [, bAccepted] = b;
+    const [, bAccepted] = genesSplitB;
     // return the mixed chromosome.
     return [...aAccepted, ...bAccepted]
 }
@@ -161,7 +163,7 @@ Defines how the framework will sort the agents with the calculated fitness value
 import { SortFunction } from 'genetic-algorithm-framework';
 
 // Define the sort function.
-export const sort: SortFunction<number[]> = (agents: AgentWithScore<number[]>[]): AgentWithScore<number[]>[] => {
+export const sort: SortFunction<number[]> = (agents: AgentWithScore<number[], number>[]): AgentWithScore<number[], number>[] => {
     // Sort the agents by their fitness value on descending order.
     return agents.sort((a, b) => b.score - a.score);
 }
@@ -176,7 +178,7 @@ Receives as a param a group of agents with the calculated fitness value, ordered
 import { SelectionFunction, AgentWithScore } from 'genetic-algorithm-framework';
 
 // Define the selection function.
-export const selection: SelectionFunction<number[]> = (agentsWithScore: AgentWithScore<number[]>[]): Agent<number[]>[] => {
+export const selection: SelectionFunction<number[]> = (agentsWithScore: AgentWithScore<number[], number>[]): Agent<number[]>[] => {
     // Agents are sorted by score, so return the best agents.
     return agentsWithScore.slice(0, agentsWithScore.length / 2).map(a => a.agent);
 }
@@ -190,9 +192,9 @@ Defines the condition that will stop the simulation. Example:
 import { Agent, StopCondition, SimulationStats } from 'genetic-algorithm-framework';
 
 // Define the stop condition.
-export const stopCondition: StopCondition<number[]> = (population: Agent<number[]>[], stats: SimulationStats<number[]>): boolean => {
+export const stopCondition: StopCondition<number[]> = (population: Agent<number[]>[], stats: SimulationStats<number[], number>): boolean => {
     // Stop the simulation at generation 100.
-    return stats.currentGeneation == 100;
+    return stats.currentGeneration == 100;
 }
 ```
 
@@ -210,7 +212,7 @@ export class MyAgentGenerator extends AgentGenerator<number[]> {
         super();
     }
 
-    createAgentFromGenome(genome: Genome<number>): MyAgent {
+    createAgentFromGenome(genome: Genome<number[]>): MyAgent {
         throw new Error('Here you should create a new agent from the genome.');
     }
 
